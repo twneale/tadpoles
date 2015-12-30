@@ -1,35 +1,25 @@
-Presto account unlocker script
+Tadpoles.com Scraper
 ==============================
 
 WHAT
 ++++
 
-This script is an automated client for presto.private.massmutual.com. Internally the script uses headless a headless Firefox browser (via selenium and X virtual frame buffers!) to submit your info to the form, but you can build/run the program with only docker installed.
+Tadpoles.com is a site where daycare centers sometimes post 
+pics of kids if they use the tadpoles ipad app. They don't support
+bulk downloads though...until now. 
 
 Dependencies
-++++++++++++
++++++++++++++
 
-Docker 
+Docker
+s3cmd
 
 Usage
 +++++
 
-To use it, create a .presto.yml file in the same directory containing your mm id and your secret question answers (note: keep the file secret!). The file looks like this::
+    ./scripts/build.sh
+    export BUCKET_URI=s3://awesome_bucket/tadpoles/
+    ./scripts/update.sh
 
-    ---
-    mm_id: mm20698
-    name of your best man: cow
-    5th grade teacher: says
-    favorite childhood friend: moo
-
-The keys in the yaml map are lowercased strings that appear in your questions; the values are the answers. The config file is added to the container as a volume at runtime and is not copied into the image at build time. 
-
-Build the docker images::
-
-    $ ./build.sh.
-
-Then run a presto container::
-
-    $ ./run.sh    
-
-Now your account should be unlocked.
+The images get saved to ./img/ in year/month subdirectories, then 
+synced to s3 with s3cmd.
