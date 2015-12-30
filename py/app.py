@@ -57,7 +57,7 @@ logging.config.dictConfig(LOGGING_CONFIG)
 # -----------------------------------------------------------------------------
 class Client:
 
-    COOKIE_FILE = "cookies.pkl"
+    COOKIE_FILE = "state/cookies.pkl"
     ROOT_URL = "http://tadpoles.com/"
     HOME_URL = "https://www.tadpoles.com/parents"
     MIN_SLEEP = 1
@@ -102,6 +102,7 @@ class Client:
 
     def load_cookies(self):
         self.info("Loading cookies.")
+        os.makedirs('state')
         with open(self.COOKIE_FILE, "rb") as f:
             self.cookies = pickle.load(f)
 
