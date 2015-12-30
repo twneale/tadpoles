@@ -11,15 +11,17 @@ bulk downloads though...until now.
 Dependencies
 +++++++++++++
 
-Docker
-s3cmd
+* Docker
+* s3cmd
 
 Usage
 +++++
 
-    ./scripts/build.sh
-    export BUCKET_URI=s3://awesome_bucket/tadpoles/
-    ./scripts/update.sh
+To use it::
+
+    $ ./scripts/build.sh
+    $ export BUCKET_URI=s3://awesome_bucket/tadpoles/
+    $ ./scripts/update.sh
 
 The images get saved to ./img/ in year/month subdirectories, then 
 synced to s3 with s3cmd.
