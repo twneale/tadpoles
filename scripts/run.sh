@@ -1,2 +1,2 @@
-docker run --rm -v $PWD/.config.yml:/.config.yml -it tadpoles
+docker run --rm -v $PWD/state:/app/state -v $PWD/img:/app/img -it tadpoles
 

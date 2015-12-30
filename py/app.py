@@ -55,6 +55,10 @@ logging.config.dictConfig(LOGGING_CONFIG)
 # -----------------------------------------------------------------------------
 # The scraper code.
 # -----------------------------------------------------------------------------
+class DownloadError(Exception):
+    pass
+
+
 class Client:
 
     COOKIE_FILE = "state/cookies.pkl"
@@ -102,7 +106,8 @@ class Client:
 
     def load_cookies(self):
         self.info("Loading cookies.")
-        os.makedirs('state')
+        if not isdir('state'):
+            os.mkdir('state')
         with open(self.COOKIE_FILE, "rb") as f:
             self.cookies = pickle.load(f)
 
@@ -243,7 +248,8 @@ class Client:
                 for chunk in resp.iter_content(1024):
                     f.write(chunk)
         else:
-            raise Exception('Got error %d' % resp.status_code)
+            msg = 'Error (%r) downloading %r'
+            raise DownloadError(msg % (resp.status_code, url))
 
     def download_images(self):
         '''Login to tadpoles.com and download all user's images.
@@ -263,7 +269,10 @@ class Client:
         self.requestify_cookies()
 
         for url in self.iter_urls():
-            self.save_image(url)
+            try:
+                self.save_image(url)
+            except DownloadError as exc:
+                self.exception(exc)
 
     def main(self):
         with self as client:

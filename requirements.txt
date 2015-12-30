@@ -1,4 +1,5 @@
 selenium
 xvfbwrapper
 pyyaml
+requests
 lxml
