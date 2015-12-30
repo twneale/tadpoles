@@ -207,7 +207,7 @@ class Client:
             # Navigate to the next month.
             month.click()
             self.warning("Getting urls for month: %r" % month.text)
-            self.sleep(minsleep=2)
+            self.sleep(minsleep=5)
             re_url = re.compile('\("([^"]+)')
             for div in self.br.find_elements_by_xpath("//li/div"):
                 url = re_url.search(div.get_attribute("style"))
