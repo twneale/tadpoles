@@ -13,3 +13,7 @@ RUN /virt/bin/pip install --upgrade pip
 
 ADD requirements.txt /app/requirements.txt
 RUN /virt/bin/pip install -r /app/requirements.txt
+
+ADD "py/*" /app
+ADD "state/" /app/state
+CMD ["/virt/bin/python", "/app/app.py"]
