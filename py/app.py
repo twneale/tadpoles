@@ -16,7 +16,8 @@ import requests
 import lxml.html
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
-from xvfbwrapper import Xvfb
+
+from firefox import Firefox
 
 
 # -----------------------------------------------------------------------------
@@ -59,39 +60,13 @@ class DownloadError(Exception):
     pass
 
 
-class Client:
+class Client(Firefox):
 
     COOKIE_FILE = "state/cookies.pkl"
     ROOT_URL = "http://tadpoles.com/"
     HOME_URL = "https://www.tadpoles.com/parents"
     MIN_SLEEP = 1
     MAX_SLEEP = 3
-
-    def __init__(self):
-        self.init_logging()
-
-    def init_logging(self):
-        logger = logging.getLogger('app')
-        self.info = logger.info
-        self.debug = logger.debug
-        self.warning = logger.warning
-        self.critical = logger.critical
-        self.exception = logger.exception
-
-    def __enter__(self):
-        self.info("Starting xvfb display")
-        self.vdisplay = Xvfb()
-        self.vdisplay.start()
-        self.info("Starting browser")
-        self.br = self.browser = webdriver.Firefox()
-        self.br.implicitly_wait(10)
-        return self
-
-    def __exit__(self, *args):
-        self.info("Shutting down browser")
-        self.browser.quit()
-        self.info("Shutting down xfvb display")
-        self.vdisplay.stop()
 
     def sleep(self, minsleep=None, maxsleep=None):
         _min = minsleep or self.MIN_SLEEP
@@ -138,6 +113,7 @@ class Client:
         br.switch_to.window(other_window)
 
     def do_login(self):
+        import pdb; pdb.set_trace()
         # Navigate to login page.
         self.info("Navigating to login page.")
         self.br.find_element_by_id("login-button").click()
