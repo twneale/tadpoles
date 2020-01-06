@@ -5,10 +5,9 @@ from selenium.webdriver import Remote
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-from eappcyber.meta import Metadata
 
 
-class Firefox(Metadata):
+class Firefox:
 
     def __init__(self, pytest_request):
         self.init_logging()
