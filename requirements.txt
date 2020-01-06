@@ -1,5 +1,2 @@
-selenium
-xvfbwrapper
-pyyaml
 requests
-lxml
+boto3
